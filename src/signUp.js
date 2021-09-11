@@ -37,7 +37,7 @@ export default function SignUp(){
 
             <button onClick={register}>Cadastrar</button>
         </InputWrapper>
-        <Link to='/signUp'>
+        <Link to='/'>
             <span>Já tem uma conta? Faça login!</span>
         </Link>
     </LoginContainer>

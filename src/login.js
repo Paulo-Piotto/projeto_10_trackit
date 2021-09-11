@@ -1,17 +1,56 @@
 import styled from "styled-components";
+import { useState } from "react";
 import logo from './assets/logo.png';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import axios from "axios";
+import Loader from "react-loader-spinner";
 
 export default function Login({setUser, user}){
+
+    const [loading, setLoading] = useState(null);
+    const history = useHistory();
     
+    function entry(event){
+        event.preventDefault();
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', user)
+            .then((resp) => {
+                setUser({...resp.data});
+                history.push('/today');
+            })
+            .catch(err => console.error );
+        setLoading(true);
+        
+
+    }
 
     return(
         <LoginContainer>
             <img src={logo} alt='logo'/>
-            <InputWrapper>
-                <input type='text' placeholder='email' />
-                <input type='text' placeholder='senha' />
-                <button>Entrar</button>
+            <InputWrapper onSubmit={entry}>
+                <input type='email' 
+                placeholder='email' 
+                onChange={(e) => setUser({...user, email: e.target.value})} 
+                value={user.email}
+                required
+                 />
+
+                <input type='password' 
+                placeholder='senha' 
+                onChange={(e) => setUser({...user, password: e.target.value})} 
+                value={user.password}
+                required
+                />
+
+                <button type='submit'>
+                {loading ? <Loader
+                type="ThreeDots"
+                color="#FFFFFF"
+                height={50}
+                width={50}
+                /> 
+                : <span>Entrar</span>}
+                
+                </button>
             </InputWrapper>
             <Link to='/signUp'>
                 <span>Não tem uma conta? Cadastre-se!</span>
@@ -39,7 +78,7 @@ const LoginContainer = styled.div`
     }
 `
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.form`
     width: 80%;
     display: flex;
     flex-direction: column;
