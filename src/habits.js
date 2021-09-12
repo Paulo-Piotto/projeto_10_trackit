@@ -39,7 +39,7 @@ export default function Habits(){
             <h3>Meus Hábitos</h3>
             <AddButton onClick={() => setCreate(true)}>+</AddButton>
             <CreateHabit create={create} setCreate={setCreate} setHabits={setHabits} habits={habits}/>
-            {habits ? habits.map((habit) => <Habit setHabits={setHabits} habits={habits} key={habit.id} habit={habit} />)
+            {habits && habits[0] !== undefined ? habits.map((habit) => <Habit setHabits={setHabits} habits={habits} key={habit.id} habit={habit} />)
             :<p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             }
             </Content>

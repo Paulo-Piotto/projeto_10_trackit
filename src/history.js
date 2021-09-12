@@ -19,8 +19,6 @@ export default function History(){
 const Container = styled.div`
     padding: 70px 0 70px 15px;
     width: 100vw;
-    height: 100vh;
-    background-color: #E5E5E5;
 
 
     h3{

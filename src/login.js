@@ -64,6 +64,8 @@ const LoginContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100vw;
+    height: 100vh;
+    background-color: white;
 
     img{
         width: 180px;
