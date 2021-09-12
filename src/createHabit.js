@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import { useHistory } from "react-router";
 import axios from "axios";
 import Day from "./day";
 import UserContext from "./userContext";
+import Loader from "react-loader-spinner";
 
 export default function CreateHabit({create, setCreate, habits, setHabits}){
     const week = [
@@ -39,9 +39,9 @@ export default function CreateHabit({create, setCreate, habits, setHabits}){
        
     ];
     const user = useContext(UserContext);
-    const history = useHistory();
     const [days, setDays] = useState([]);
     const [newHabit, setNewHabit] = useState('');
+    const [loading, setLoading] = useState(false);
 
     function saveNewHabit(){
         const config = {
@@ -59,8 +59,10 @@ export default function CreateHabit({create, setCreate, habits, setHabits}){
                 setDays([]);
                 setNewHabit('');
                 setHabits([...habits, resp.data]);
+                setLoading(false);
             })
             .catch(() => console.error);
+        setLoading(true);
     }
 
     return(
@@ -70,6 +72,7 @@ export default function CreateHabit({create, setCreate, habits, setHabits}){
             placeholder='nome do hábito'
             value={newHabit}
             onChange={(e) => setNewHabit(e.target.value)}
+            disabled={loading}
             />
             <div>
                 {week.map((day, index) => 
@@ -83,7 +86,14 @@ export default function CreateHabit({create, setCreate, habits, setHabits}){
             </div>
             <ButtonsContainer>
                 <span onClick={() => setCreate(false)}>Cancelar</span>
-                <button onClick={saveNewHabit}>Salvar</button>
+                <button onClick={saveNewHabit}>
+                {loading ? <Loader
+                type="ThreeDots"
+                color="#FFFFFF"
+                height={50}
+                width={50}
+                /> 
+                : 'Salvar'}</button>
             </ButtonsContainer>
         </CreateContainer>
     );
@@ -138,5 +148,8 @@ const ButtonsContainer = styled.div`
         outline: none;
         width: 84px;
         height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 `

@@ -17,7 +17,7 @@ export default function History(){
 }
 
 const Container = styled.div`
-    padding: 70px 0 70px 15px;
+    padding: 70px 0 20px 15px;
     width: 100vw;
 
 

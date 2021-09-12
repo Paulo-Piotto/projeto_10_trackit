@@ -7,7 +7,7 @@ import Loader from "react-loader-spinner";
 
 export default function Login({setUser, user}){
 
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     
     function entry(event){
@@ -17,7 +17,14 @@ export default function Login({setUser, user}){
                 setUser({...resp.data});
                 history.push('/today');
             })
-            .catch(err => console.error );
+            .catch(err => {
+                setLoading(false);
+                setUser({
+                    email: '',
+                    password: ''
+                  });
+                alert('algo está errado')
+            });
         setLoading(true);
         
 
@@ -32,6 +39,7 @@ export default function Login({setUser, user}){
                 onChange={(e) => setUser({...user, email: e.target.value})} 
                 value={user.email}
                 required
+                disabled={loading}
                  />
 
                 <input type='password' 
@@ -39,6 +47,7 @@ export default function Login({setUser, user}){
                 onChange={(e) => setUser({...user, password: e.target.value})} 
                 value={user.password}
                 required
+                disabled={loading}
                 />
 
                 <button type='submit'>

@@ -39,17 +39,20 @@ export default function Habit({habit, setHabits, habits}){
        
     ];
     const user = useContext(UserContext);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    }
 
     function deleteHabit(){
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        }
-        axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`, config)
+        const confirm = window.confirm('Quer mesmo deletar esse hábito?')
+        if(confirm){
+            axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`, config)
             .then(() => setHabits(habits.filter((el) =>
                 el.name === habit.name ? false : true
             )))
+        }  
     }
 
     return(

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import vetor from "./assets/vetor.png"
 
 export default function Footer(){
     return(
@@ -12,7 +11,6 @@ export default function Footer(){
             <Link to='/today'>
                 <TodayButton>
                     Hoje
-                    <img src={vetor} alt='' />
                 </TodayButton>
             </Link>
             
